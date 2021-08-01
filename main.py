@@ -49,7 +49,7 @@ async def link_handler(c, m):
     links = soup.findAll('a')
     for link in links:
         result = link['href']
-        print(result)
+        print(f"{result}")
         await m.reply(f"{result}")
             
         
