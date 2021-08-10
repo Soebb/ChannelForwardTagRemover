@@ -14,6 +14,8 @@ bot = Client(
     api_hash = os.environ["API_HASH"]
 )
 
+scraper = cloudscraper.create_scraper()
+
 
 
 START_TXT = """
