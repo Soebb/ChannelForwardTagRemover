@@ -52,7 +52,7 @@ async def link_handler(c, m):
             result = link['href']
             print(f"{result}")
             await m.reply(f"{result}")
-    except Exceptions as e:
+    except Exception as e:
         print(e)
             
         
