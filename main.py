@@ -47,7 +47,9 @@ async def link_handler(c, m):
         page = requests.get(URL, headers=headers)
         soup = BeautifulSoup(page.content, 'html.parser')
         links = soup.findAll('a')
+        li = soup.findAll('p')
         print(links)
+        print(li)
         for link in links:
             link_url = link["href"]
             print(link_url)
