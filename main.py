@@ -42,7 +42,7 @@ async def start(bot, update):
 async def link_handler(c, m):
     headers = {
         "User-agent": 'Mozilla/5.0 (Linux; Android 8.0.0; SM-G960F Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.84 Mobile Safari/537.36'}
-    URL = 'https://worldsubtitle.site/movies/a-savage-nature-2020'
+    URL = f'{m.text}'
     try:
         page = requests.get(URL, headers=headers)
         soup = BeautifulSoup(page.content, 'html.parser')
