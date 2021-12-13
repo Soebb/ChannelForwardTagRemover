@@ -17,12 +17,13 @@ bot = Client(
 scraper = cloudscraper.create_scraper()
 
 
-
-T = '24' + ' ya el'
+e = '24'
+d = 'زخم'
+T = f'زیرنویس چسبیده قسمت {e} {d} با کیفیت 240'
 
 @bot.on_message(filters.command(["start"]))
 async def start(bot, update):
-    await update.reply(f'س {T} خ')
+    await update.reply(T)
 
 
 @bot.on_message(filters.regex(r'https?://[^\s]+') & filters.private)
