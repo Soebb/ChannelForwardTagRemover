@@ -18,7 +18,7 @@ scraper = cloudscraper.create_scraper()
 
 
 
-T = '24' + 'ya el'
+T = '24' + ' ya el'
 
 @bot.on_message(filters.command(["start"]))
 async def start(bot, update):
