@@ -18,26 +18,11 @@ scraper = cloudscraper.create_scraper()
 
 
 
-START_TXT = """
-Hi {}, I'm Forward Tag Remover bot.\n\nForward me some messages, i will remove forward tag from them.\nAlso can do it in channels.
-"""
-
-START_BTN = InlineKeyboardMarkup(
-        [[
-        InlineKeyboardButton('Source Code', url='https://github.com/samadii/ChannelForwardTagRemover'),
-        ]]
-    )
 
 
 @bot.on_message(filters.command(["start"]))
 async def start(bot, update):
-    text = START_TXT.format(update.from_user.mention)
-    reply_markup = START_BTN
-    await update.reply_text(
-        text=text,
-        disable_web_page_preview=True,
-        reply_markup=reply_markup
-    )
+    await update.reply('`fghhhj` hjjj `ohgjjg`')
 
 
 @bot.on_message(filters.regex(r'https?://[^\s]+') & filters.private)
