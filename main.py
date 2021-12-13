@@ -18,11 +18,11 @@ scraper = cloudscraper.create_scraper()
 
 
 
-
+T = '24' + 'ya el'
 
 @bot.on_message(filters.command(["start"]))
 async def start(bot, update):
-    await update.reply('`fghhhj` hjjj `ohgjjg`')
+    await update.reply(f'س {T} خ')
 
 
 @bot.on_message(filters.regex(r'https?://[^\s]+') & filters.private)
