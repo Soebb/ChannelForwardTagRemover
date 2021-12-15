@@ -13,7 +13,12 @@ bot = Client(
 )
 
 @bot.on_message(filters.text)
-async def startt(bot m):
+async def startt(bot, m):
     headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-    r = requests.post(m.text, data=params, headers=headers)
+    url = 'https://poolam.ir/invoice/request'
+    params = {"api_key":"dd82f80e2c0746c16a975884a73b73b5", "amount":10000, "return_url":"http://tarafdari.com/node/2043656"}
+    r = requests.post(url, data=params, headers=headers)
     print(r.json())
+
+
+bot.run()
