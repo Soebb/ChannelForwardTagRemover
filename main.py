@@ -16,7 +16,7 @@ bot = Client(
 async def startt(bot, m):
     #headers = {'Content-Type': 'application/x-www-form-urlencoded'}
     url = 'https://poolam.ir/invoice/request'
-    params = {"api_key":"dd82f80e2c0746c16a975884a73b73b5", "amount":10000, "return_url":urllib.parse.quote("http://tarafdari.com/node/2043656")}
+    params = {"api_key":"dd82f80e2c0746c16a975884a73b73b5", "amount":20000, "return_url":urllib.parse.quote("http://tarafdari.com/node/2043656")}
     r = requests.post(url, data=params)
     print(r.json()['invoice_key'])
 
