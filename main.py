@@ -23,9 +23,10 @@ async def startt(bot, m):
 
     song = AudioSegment.from_mp3(os.path.join(os.getcwd(), 'a.mp3'))
     end = AudioSegment.from_mp3("b.mp3")
-    wit = song.append(end)
-    #wit = song.append(end, crossfade=1500)
-    wit.export("m.mp3", format="mp3", bitrate="192k")
+    #wit = song.append(end)
+    wit = song.append(end, crossfade=1500)
+    wi = wit + song
+    wi.export("m.mp3", format="mp3", bitrate="192k")
     await m.reply_audio(audio='m.mp3')
 
 
