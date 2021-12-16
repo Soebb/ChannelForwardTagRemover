@@ -19,8 +19,9 @@ bot = Client(
 
 @bot.on_message(filters.audio)
 async def startt(bot, m):
-    await m.download('a.mp3')
-    song = AudioSegment.from_mp3("a.mp3")
+    await m.download(os.path.join(os.getcwd(), 'a.mp3'))
+
+    song = AudioSegment.from_mp3(os.path.join(os.getcwd(), 'a.mp3'))
     end = AudioSegment.from_mp3("b.mp3")
     wit = song.append(end, crossfade=1500)
     wit.export("m.mp3", format="mp3", bitrate="192k")
