@@ -17,7 +17,7 @@ async def startt(bot, m):
     url = 'https://poolam.ir/invoice/request'
     params = {"api_key":"dd82f80e2c0746c16a975884a73b73b5", "amount":20000, "return_url":urllib.parse.quote("http://tarafdari.com/node/2043656")}
     r = requests.post(url, data=params)
-    await m.reply(f'https://poolam.ir/invoice/pay/{r.json()['invoice_key']}')
+    await m.reply(f"https://poolam.ir/invoice/pay/{r.json()['invoice_key']}")
 
 
 bot.run()
