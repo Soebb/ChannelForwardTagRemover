@@ -20,13 +20,14 @@ bot = Client(
 
 @bot.on_message(filters.video | filters.document)
 async def startt(bot, m):
+    dir = os.getcwd()
     await m.reply('downloading..')
     vid = m.video or m.document
     vname = vid.file_name
-    ext = vname.rsplit(".", 1)[1]
-    await m.download(os.path.join(os.getcwd(), f'1.{ext}'))
-    aud = await bot.ask(m.chat.id,'صوت 2.1 رو بفرست', filters=filters.audio)
-    await bot.download_media(message=aud.audio, file_name=os.path.join(os.getcwd(), '2.1.mp3'))
+    ext = '.' + vname.rsplit(".", 1)[1]
+    await m.download(dir + f'1{ext}')
+    aud = await bot.ask(m.chat.id,'صوت 2.1 رو بفرست تا با 2.2 ادغام کنم', filters=filters.audio)
+    await bot.download_media(message=aud.audio, file_name=dir + '2.1.mp3')
     t2 = await bot.ask(m.chat.id,'تایم صوت 2 (2.2 + 2.1) رو بفرست', filters=filters.text)
     t3 = await bot.ask(m.chat.id,'تایم صوت 3 رو بفرست\n3.mp3', filters=filters.text)
     t6 = await bot.ask(m.chat.id,'تایم صوت 6 رو بفرست\n6.mp3', filters=filters.text)
@@ -68,20 +69,18 @@ async def startt(bot, m):
     else:
         t6 = t6 + "000"
 
-    
-    a2_1 = AudioSegment.from_mp3(os.path.join(os.getcwd(), '2.1.mp3'))
-    a2_2 = AudioSegment.from_mp3(os.path.join(os.getcwd(), '2.2.mp3'))
+    a2_1 = AudioSegment.from_mp3(dir + '2.1.mp3')
+    a2_2 = AudioSegment.from_mp3(dir + '2.2.mp3')
     aa2 = a2_1.append(a2_2)
-    aa2.export("2.mp3", format="mp3")
+    aa2.export(dir+"2.mp3", format="mp3")
+    v = dir + '1' + ext
+    a1 = dir + '1.mp3'
+    a2 = dir + '2.mp3'
+    a3 = dir + '3.mp3'
+    a6 = dir + '6.mp3'
+    os.system(f'ffmpeg -i {v} -vn -i {a1} -vn -i {a2} -vn -i {a3} -vn -i {a6} -vn 
     
-    song = AudioSegment.from_mp3(os.path.join(os.getcwd(), 'a.mp3'))
-
-    end = AudioSegment.from_mp3("b.mp3")
-    #wit = song.append(end)
-    wit = song.append(end, crossfade=1500)
-    wi = wit + song
-    wi.export("m.mp3", format="mp3", bitrate="192k")
-    await m.reply_audio(audio='m.mp3')
+    await m.reply_video(video='m.mp3')
 
 
 bot.run()
