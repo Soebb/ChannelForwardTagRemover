@@ -31,20 +31,27 @@ async def startt(bot, m):
     t6 = await bot.ask(m.chat.id,'تایم صوت 6 رو بفرست\n6.mp3', filters=filters.text)
     try:
         tt2 = t2.text.split('.')[1]
+        t2 = t2.text.split('.')[0]
+        t2 = f'0{t2.text[:1]}:{t2.text[:3][1:]}:{t2.text[3:]}'
     except:
         tt2 = None
+        t2 = f'0{t2.text[:1]}:{t2.text[:3][1:]}:{t2.text[3:]}'
     try:
         tt3 = t3.text.split('.')[1]
+        t3 = t3.text.split('.')[0]
+        t3 = f'0{t3.text[:1]}:{t3.text[:3][1:]}:{t3.text[3:]}'
     except:
         tt3 = None
+        t3 = f'0{t3.text[:1]}:{t3.text[:3][1:]}:{t3.text[3:]}'
     try:
         tt6 = t6.text.split('.')[1]
+        t6 = t6.text.split('.')[0]
+        t6 = f'0{t6.text[:1]}:{t6.text[:3][1:]}:{t6.text[3:]}'
     except:
         tt6 = None
+        t6 = f'0{t6.text[:1]}:{t6.text[:3][1:]}:{t6.text[3:]}'
 
-    t2 = f'0{t2.text[:1]}:{t2.text[:3][1:]}:{t2.text[3:]}'
-    t3 = f'0{t3.text[:1]}:{t3.text[:3][1:]}:{t3.text[3:]}'
-    t6 = f'0{t6.text[:1]}:{t6.text[:3][1:]}:{t6.text[3:]}'
+    
     t2 = sum(x * int(t) for x, t in zip([1, 60, 3600], reversed(t2.split(":"))))
     t3 = sum(x * int(t) for x, t in zip([1, 60, 3600], reversed(t3.split(":"))))
     t6 = sum(x * int(t) for x, t in zip([1, 60, 3600], reversed(t6.split(":"))))
