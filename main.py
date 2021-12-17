@@ -29,14 +29,15 @@ async def startt(bot, m):
     t2 = await bot.ask(m.chat.id,'تایم صوت 2 (2.2 + 2.1) رو بفرست', filters=filters.text)
     t3 = await bot.ask(m.chat.id,'تایم صوت 3 رو بفرست\n3.mp3', filters=filters.text)
     t6 = await bot.ask(m.chat.id,'تایم صوت 6 رو بفرست\n6.mp3', filters=filters.text)
+    t2 = f'0{t2.text[:1]}:{t2.text[:3][1:]}:{t2.text[3:]}'
+    t3 = f'0{t3.text[:1]}:{t3.text[:3][1:]}:{t3.text[3:]}'
+    t6 = f'0{t6.text[:1]}:{t6.text[:3][1:]}:{t6.text[3:]}'
+    
     a2_1 = AudioSegment.from_mp3(os.path.join(os.getcwd(), '2.1.mp3'))
     a2_2 = AudioSegment.from_mp3(os.path.join(os.getcwd(), '2.2.mp3'))
     aa2 = a2_1.append(a2_2)
     aa2.export("2.mp3", format="mp3")
-    a2 = os.path.join(os.getcwd(), '2.mp3')
-    a3 = os.path.join(os.getcwd(), '3.mp3')
-    a6 = os.path.join(os.getcwd(), '6.mp3')
-
+    
     song = AudioSegment.from_mp3(os.path.join(os.getcwd(), 'a.mp3'))
 
     end = AudioSegment.from_mp3("b.mp3")
