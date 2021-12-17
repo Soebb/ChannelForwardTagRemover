@@ -25,6 +25,12 @@ async def startt(bot, m):
     await m.download(os.path.join(os.getcwd(), f'v.{vid.file_name.rsplit(".", 1)[1]}'))
     aud = await bot.ask(m.chat.id,'صوت 2.1 رو بفرست', filters=filters.audio)
     await bot.download_media(message=m, file_name=os.path.join(os.getcwd(), '2.1.mp3'))
+    t2 = await bot.ask(m.chat.id,'تایم صوت 2 (2.2 + 2.1) رو بفرست', filters=filters.text)
+    t3 = await bot.ask(m.chat.id,'تایم صوت 3 رو بفرست\n3.mp3', filters=filters.text)
+    t6 = await bot.ask(m.chat.id,'تایم صوت 6 رو بفرست\n6.mp3', filters=filters.text)
+    
+    
+
     song = AudioSegment.from_mp3(os.path.join(os.getcwd(), 'a.mp3'))
     end = AudioSegment.from_mp3("b.mp3")
     #wit = song.append(end)
