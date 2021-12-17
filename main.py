@@ -32,7 +32,6 @@ async def startt(bot, m):
             await m.reply(return_link)
         else:
             await m.reply('پرداختی صورت نگرفته است\n\nدرصورت بروز خطا به آیدی زیر پیام بدید\n@mrmacvin')
-        
     else:
         url = 'https://poolam.ir/invoice/request'
         params = {"api_key":poolam_api_key, "amount":int(Price_rial), "return_url":urllib.parse.quote('https://zil.ink/dlmacvin')}
