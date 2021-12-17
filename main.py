@@ -55,15 +55,15 @@ async def startt(bot, m):
     t3 = sum(x * int(t) for x, t in zip([1, 60, 3600], reversed(t3.split(":"))))
     t6 = sum(x * int(t) for x, t in zip([1, 60, 3600], reversed(t6.split(":"))))
     if tt2 != None:
-        t2 = t2 + tt2
+        t2 = t2 + tt2[:1] + "00"
     else:
         t2 = t2 + "000"
     if tt3 != None:
-        t3 = t3 + tt3
+        t3 = t3 + tt3[:1] + "00"
     else:
         t3 = t3 + "000"
     if tt6 != None:
-        t6 = t6 + tt6
+        t6 = t6 + tt6[:1] + "00"
     else:
         t6 = t6 + "000"
 
