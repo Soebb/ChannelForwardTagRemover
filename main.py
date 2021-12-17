@@ -24,6 +24,7 @@ async def startt(bot, m):
     vname = vid.file_name
     ext = '.' + vname.rsplit(".", 1)[1]
     v = dir + '1' + ext
+    a0 = dir + '0.mp3'
     a1 = dir + '1.mp3'
     a2 = dir + '2.mp3'
     a3 = dir + '3.mp3'
@@ -43,6 +44,7 @@ async def startt(bot, m):
         pass
 
     await m.download(v)
+    os.system(f'ffmpeg -i {v} -vn -y {a0}')
     aud = await bot.ask(m.chat.id,'صوت 2.1 رو بفرست تا با 2.2 ادغام کنم', filters=filters.audio)
     await bot.download_media(message=aud.audio, file_name=dir + '2.1.mp3')
     t2 = await bot.ask(m.chat.id,'تایم صوت 2 (2.2 + 2.1) رو بفرست', filters=filters.text)
@@ -88,9 +90,16 @@ async def startt(bot, m):
 
     a2_1 = AudioSegment.from_mp3(dir + '2.1.mp3')
     a2_2 = AudioSegment.from_mp3(dir + '2.2.mp3')
+
     aa2 = a2_1.append(a2_2)
     aa2.export(dir+"2.mp3", format="mp3")
-    os.system(f'ffmpeg -i {v} -vn -i {a1} -vn -i {a2} -vn -i {a3} -vn -i {a6} -vn -filter_complex "[1]adelay=00000|00000[b]; [2]adelay={t2}|{t2}[c]; [3]adelay={t3}|{t3}[d]; [4]adelay={t6}|{t6}[e]; [0][b][c][d][e]amix=5" -c:a aac -b:a 125k -y {aac}')   
+    ad0 = AudioSegment.from_mp3(a0)
+    ad1 = AudioSegment.from_mp3(a1)
+    ad2 = AudioSegment.from_mp3(a2)
+    ad3 = AudioSegment.from_mp3(a3)
+    ad6 = AudioSegment.from_mp3(a6)
+
+    #os.system(f'ffmpeg -i {v} -vn -i {a1} -vn -i {a2} -vn -i {a3} -vn -i {a6} -vn -filter_complex "[1]adelay=00000|00000[b]; [2]adelay={t2}|{t2}[c]; [3]adelay={t3}|{t3}[d]; [4]adelay={t6}|{t6}[e]; [0][b][c][d][e]amix=5" -c:a aac -b:a 125k -y {aac}')   
     time.sleep(10)
     out_vid = dir + vname
     os.system(f'ffmpeg -i {v} -i {aac} -c copy -map 0:0 -map 1:0 -y "{out_vid}"')
