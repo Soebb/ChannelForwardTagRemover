@@ -1,5 +1,5 @@
 from pydub import AudioSegment
-import os, json
+import os, json, time
 from pyromod import listen
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
@@ -78,10 +78,13 @@ async def startt(bot, m):
     a2 = dir + '2.mp3'
     a3 = dir + '3.mp3'
     a6 = dir + '6.mp3'
-    os.system(f'ffmpeg -i {v} -vn -i {a1} -vn -i {a2} -vn -i {a3} -vn -i {a6} -vn -filter_complex "[1]adelay=00000|00000[b];   
+    aac = dir + 'a.aac'
+    os.system(f'ffmpeg -i {v} -vn -i {a1} -vn -i {a2} -vn -i {a3} -vn -i {a6} -vn -filter_complex "[1]adelay=00000|00000[b]; [2]adelay={t2}|{t2}[c]; [3]adelay={t3}|{t3}[d]; [4]adelay={t6}|{t6}[e]; [0][b][c][d][e]amix=5" -c:a aac -b:a 125k {aac}')   
+    time.sleep(10)
+    out_vid = dir + '2' + ext
+    os.system(f'ffmpeg 
+    await m.reply_video(video=out_vid, file_name=vname)
     
-    await m.reply_video(video='vv'+ext, file_name=vname)
-
 
 bot.run()
 
