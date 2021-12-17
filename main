@@ -20,15 +20,24 @@ bot = Client(
     api_hash = API_HASH
 )
 
+invoice = "12345"
 @bot.on_message(filters.text)
 async def startt(bot, m):
+    global invoice
     if 'check' in m.text:
-
+        url = 'https://poolam.ir/invoice/check/' + invoice
+        params = {"api_key":poolam_api_key}
+        try:
+            r = requests.post(url, data=params)
+        except:
+            return await m.reply('پرداختی صورت نگرفته است\n\nدرصورت بروز خطا به آیدی زیر پیام بدید\n@mrmacvin')
+        
     else:
         url = 'https://poolam.ir/invoice/request'
-        params = {"api_key":poolam_api_key, "amount":int(Price_rial), "return_url":urllib.parse.quote(return_link)}
+        params = {"api_key":poolam_api_key, "amount":int(Price_rial), "return_url":urllib.parse.quote('https://zil.ink/dlmacvin')}
         r = requests.post(url, data=params)
-        await m.reply(f"https://poolam.ir/invoice/pay/{r.json()['invoice_key']}")
+        invoice = f"{r.json()['invoice_key']}"
+        await m.reply("https://poolam.ir/invoice/pay/" + invoice)
 
 
 bot.run()
