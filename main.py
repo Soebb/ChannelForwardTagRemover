@@ -26,9 +26,21 @@ async def startt(bot, m):
     await m.download(os.path.join(os.getcwd(), f'v.{vid.file_name.rsplit(".", 1)[1]}'))
     aud = await bot.ask(m.chat.id,'صوت 2.1 رو بفرست', filters=filters.audio)
     await bot.download_media(message=aud.audio, file_name=os.path.join(os.getcwd(), '2.1.mp3'))
-    t2 = await bot.ask(m.chat.id,'تایم صوت 2 (2.2 + 2.1) رو بفرست', filters=filters.text)
-    t3 = await bot.ask(m.chat.id,'تایم صوت 3 رو بفرست\n3.mp3', filters=filters.text)
-    t6 = await bot.ask(m.chat.id,'تایم صوت 6 رو بفرست\n6.mp3', filters=filters.text)
+    t22 = await bot.ask(m.chat.id,'تایم صوت 2 (2.2 + 2.1) رو بفرست', filters=filters.text)
+    t33 = await bot.ask(m.chat.id,'تایم صوت 3 رو بفرست\n3.mp3', filters=filters.text)
+    t66 = await bot.ask(m.chat.id,'تایم صوت 6 رو بفرست\n6.mp3', filters=filters.text)
+    try:
+        
+    except:
+        
+    try:
+        
+    except:
+        
+    try:
+        
+    except:
+        
     t2 = f'0{t2.text[:1]}:{t2.text[:3][1:]}:{t2.text[3:]}'
     t3 = f'0{t3.text[:1]}:{t3.text[:3][1:]}:{t3.text[3:]}'
     t6 = f'0{t6.text[:1]}:{t6.text[:3][1:]}:{t6.text[3:]}'
