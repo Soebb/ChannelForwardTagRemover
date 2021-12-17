@@ -1,18 +1,16 @@
 from pydub import AudioSegment
-import os, json, time
+import os, time
 from pyromod import listen
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-import requests  
-import urllib.parse
 
 
-BOT_TOKEN = os.environ.get('BOT_TOKEN')
-API_ID = os.environ.get('API_ID')
-API_HASH = os.environ.get('API_HASH')
+BOT_TOKEN = " "
+API_ID = " "
+API_HASH = " "
 
 bot = Client(
-    "poolam",
+    "voice-tag",
     bot_token = BOT_TOKEN,
     api_id = API_ID,
     api_hash = API_HASH
@@ -25,7 +23,26 @@ async def startt(bot, m):
     vid = m.video or m.document
     vname = vid.file_name
     ext = '.' + vname.rsplit(".", 1)[1]
-    await m.download(dir + f'1{ext}')
+    v = dir + '1' + ext
+    a1 = dir + '1.mp3'
+    a2 = dir + '2.mp3'
+    a3 = dir + '3.mp3'
+    a6 = dir + '6.mp3'
+    aac = dir + 'a.aac'
+    try:
+        os.remove(v)
+    except:
+        pass
+    try:
+        os.remove(a2)
+    except:
+        pass
+    try:
+        os.remove(dir + '2.1.mp3')
+    except:
+        pass
+
+    await m.download(v)
     aud = await bot.ask(m.chat.id,'صوت 2.1 رو بفرست تا با 2.2 ادغام کنم', filters=filters.audio)
     await bot.download_media(message=aud.audio, file_name=dir + '2.1.mp3')
     t2 = await bot.ask(m.chat.id,'تایم صوت 2 (2.2 + 2.1) رو بفرست', filters=filters.text)
@@ -73,16 +90,10 @@ async def startt(bot, m):
     a2_2 = AudioSegment.from_mp3(dir + '2.2.mp3')
     aa2 = a2_1.append(a2_2)
     aa2.export(dir+"2.mp3", format="mp3")
-    v = dir + '1' + ext
-    a1 = dir + '1.mp3'
-    a2 = dir + '2.mp3'
-    a3 = dir + '3.mp3'
-    a6 = dir + '6.mp3'
-    aac = dir + 'a.aac'
-    os.system(f'ffmpeg -i {v} -vn -i {a1} -vn -i {a2} -vn -i {a3} -vn -i {a6} -vn -filter_complex "[1]adelay=00000|00000[b]; [2]adelay={t2}|{t2}[c]; [3]adelay={t3}|{t3}[d]; [4]adelay={t6}|{t6}[e]; [0][b][c][d][e]amix=5" -c:a aac -b:a 125k {aac}')   
+    os.system(f'ffmpeg -i {v} -vn -i {a1} -vn -i {a2} -vn -i {a3} -vn -i {a6} -vn -filter_complex "[1]adelay=00000|00000[b]; [2]adelay={t2}|{t2}[c]; [3]adelay={t3}|{t3}[d]; [4]adelay={t6}|{t6}[e]; [0][b][c][d][e]amix=5" -c:a aac -b:a 125k -y {aac}')   
     time.sleep(10)
     out_vid = dir + vname
-    os.system(f'ffmpeg 
+    os.system(f'ffmpeg -i {v} -i {aac} -c copy -map 0:0 -map 1:0 -y "{out_vid}"')
     await m.reply_video(video=out_vid, file_name=vname)
     
 
