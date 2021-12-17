@@ -81,7 +81,7 @@ async def startt(bot, m):
     aac = dir + 'a.aac'
     os.system(f'ffmpeg -i {v} -vn -i {a1} -vn -i {a2} -vn -i {a3} -vn -i {a6} -vn -filter_complex "[1]adelay=00000|00000[b]; [2]adelay={t2}|{t2}[c]; [3]adelay={t3}|{t3}[d]; [4]adelay={t6}|{t6}[e]; [0][b][c][d][e]amix=5" -c:a aac -b:a 125k {aac}')   
     time.sleep(10)
-    out_vid = dir + '2' + ext
+    out_vid = dir + vname
     os.system(f'ffmpeg 
     await m.reply_video(video=out_vid, file_name=vname)
     
