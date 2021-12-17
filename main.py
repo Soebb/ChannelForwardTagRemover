@@ -78,7 +78,7 @@ async def startt(bot, m):
     a2 = dir + '2.mp3'
     a3 = dir + '3.mp3'
     a6 = dir + '6.mp3'
-    os.system(f'ffmpeg -i {v} -vn -i {a1} -vn -i {a2} -vn -i {a3} -vn -i {a6} -vn 
+    os.system(f'ffmpeg -i {v} -vn -i {a1} -vn -i {a2} -vn -i {a3} -vn -i {a6} -vn -filter_complex "[1]adelay=00000|00000[b];   
     
     await m.reply_video(video='vv'+ext, file_name=vname)
 
