@@ -1,5 +1,6 @@
 from pydub import AudioSegment
 import os, json
+from pyromod import listen
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 import requests  
@@ -17,11 +18,13 @@ bot = Client(
     api_hash = API_HASH
 )
 
-@bot.on_message(filters.private)
+@bot.on_message(filters.video | filters.document)
 async def startt(bot, m):
-    return await m.reply(m.text)
-    await m.download(os.path.join(os.getcwd(), 'a.mp3'))
-
+    vid = m.video or m.document
+    vname = vid.file_name
+    await m.download(os.path.join(os.getcwd(), f'v.{vid.file_name.rsplit(".", 1)[1]}'))
+    aud = await bot.ask(m.chat.id,'صوت 2.1 رو بفرست', filters=filters.audio)
+    await bot.download_media(message=m, file_name=os.path.join(os.getcwd(), '2.1.mp3'))
     song = AudioSegment.from_mp3(os.path.join(os.getcwd(), 'a.mp3'))
     end = AudioSegment.from_mp3("b.mp3")
     #wit = song.append(end)
