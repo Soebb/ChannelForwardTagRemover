@@ -27,10 +27,11 @@ async def startt(bot, m):
     if 'check' in m.text:
         url = 'https://poolam.ir/invoice/check/' + invoice
         params = {"api_key":poolam_api_key}
-        try:
-            r = requests.post(url, data=params)
-        except:
-            return await m.reply('پرداختی صورت نگرفته است\n\nدرصورت بروز خطا به آیدی زیر پیام بدید\n@mrmacvin')
+        r = requests.post(url, data=params)
+        if r.json()['status'] == 1:
+            await m.reply(return_link)
+        else:
+            await m.reply('پرداختی صورت نگرفته است\n\nدرصورت بروز خطا به آیدی زیر پیام بدید\n@mrmacvin')
         
     else:
         url = 'https://poolam.ir/invoice/request'
