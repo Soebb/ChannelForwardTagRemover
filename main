@@ -22,10 +22,13 @@ bot = Client(
 
 @bot.on_message(filters.text)
 async def startt(bot, m):
-    url = 'https://poolam.ir/invoice/request'
-    params = {"api_key":poolam_api_key, "amount":int(Price_rial), "return_url":urllib.parse.quote(return_link)}
-    r = requests.post(url, data=params)
-    await m.reply(f"https://poolam.ir/invoice/pay/{r.json()['invoice_key']}")
+    if 'check' in m.text:
+
+    else:
+        url = 'https://poolam.ir/invoice/request'
+        params = {"api_key":poolam_api_key, "amount":int(Price_rial), "return_url":urllib.parse.quote(return_link)}
+        r = requests.post(url, data=params)
+        await m.reply(f"https://poolam.ir/invoice/pay/{r.json()['invoice_key']}")
 
 
 bot.run()
