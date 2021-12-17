@@ -20,7 +20,7 @@ bot = Client(
 
 @bot.on_message(filters.video | filters.document)
 async def startt(bot, m):
-    dir = os.getcwd()
+    dir = os.getcwd().replace('\\', '/') + '/'
     await m.reply('downloading..')
     vid = m.video or m.document
     vname = vid.file_name
@@ -80,7 +80,7 @@ async def startt(bot, m):
     a6 = dir + '6.mp3'
     os.system(f'ffmpeg -i {v} -vn -i {a1} -vn -i {a2} -vn -i {a3} -vn -i {a6} -vn 
     
-    await m.reply_video(video='m.mp3')
+    await m.reply_video(video='vv'+ext, file_name=vname)
 
 
 bot.run()
