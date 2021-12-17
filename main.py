@@ -32,7 +32,10 @@ async def startt(bot, m):
     t2 = f'0{t2.text[:1]}:{t2.text[:3][1:]}:{t2.text[3:]}'
     t3 = f'0{t3.text[:1]}:{t3.text[:3][1:]}:{t3.text[3:]}'
     t6 = f'0{t6.text[:1]}:{t6.text[:3][1:]}:{t6.text[3:]}'
-    
+    t2 = sum(x * int(t) for x, t in zip([1, 60, 3600], reversed(t2.split(":"))))
+    t3 = sum(x * int(t) for x, t in zip([1, 60, 3600], reversed(t3.split(":"))))
+    t6 = sum(x * int(t) for x, t in zip([1, 60, 3600], reversed(t6.split(":"))))
+
     a2_1 = AudioSegment.from_mp3(os.path.join(os.getcwd(), '2.1.mp3'))
     a2_2 = AudioSegment.from_mp3(os.path.join(os.getcwd(), '2.2.mp3'))
     aa2 = a2_1.append(a2_2)
