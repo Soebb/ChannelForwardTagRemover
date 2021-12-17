@@ -1,5 +1,6 @@
 pyrogram
 tgcrypto
 pydub
+pyromod
 requests
 urllib3
