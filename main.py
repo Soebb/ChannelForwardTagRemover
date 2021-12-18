@@ -51,7 +51,25 @@ async def start(bot, m):
 async def callback(bot, update):
     global chatid
     global msgid
-
+    if update.data == "refresh":
+        keyboard = []
+        keyboard.append(refresh_button)
+        try:
+            for file in glob.glob('C:/dlmacvin/1aa/*'):
+                keyboard.append(
+                    [
+                        InlineKeyboardButton(
+                            text=file.rsplit('/', 1)[1].replace('1aa\\', ''),
+                            callback_data=file.rsplit('/', 1)[1].replace('1aa\\', '')
+                        )
+                    ]
+                )
+        except Exception as e:
+            print(e)
+            return
+        keyboard.append(refresh_button)
+        await update.message.edit(text="Which one?", reply_markup=InlineKeyboardMarkup(keyboard))
+        return
 
 @bot.on_message(filters.video | filters.document)
 async def startt(bot, m):
