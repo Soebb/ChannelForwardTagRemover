@@ -84,19 +84,18 @@ async def callback(bot, update):
                 ext = '.' + file.rsplit('.', 1)[1]
                 
                 v = dir + '1' + ext
-    
-    try:
-        os.remove(v)
-    except:
-        pass
-    try:
-        os.remove(a2)
-    except:
-        pass
-    try:
-        os.remove(dir + '2.1.mp3')
-    except:
-        pass
+                try:
+                    os.remove(v)
+                except:
+                    pass
+                try:
+                    os.remove(a2)
+                except:
+                    pass
+                try:
+                    os.remove(dir + '2.1.mp3')
+                except:
+                    pass
 
     await m.download(v)
     aud = await bot.ask(m.chat.id,'صوت 2.1 رو بفرست تا با 2.2 ادغام کنم', filters=filters.audio)
