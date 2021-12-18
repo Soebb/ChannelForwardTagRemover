@@ -1,8 +1,8 @@
 from pydub import AudioSegment
-import os, time
+import os, time, glob, datetime, subprocess
 from pyromod import listen
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 
 
 BOT_TOKEN = " "
@@ -10,11 +10,48 @@ API_ID = " "
 API_HASH = " "
 
 bot = Client(
-    "voice-tag",
+    ":memory:",
     bot_token = BOT_TOKEN,
     api_id = API_ID,
     api_hash = API_HASH
 )
+
+refresh_button = [
+    InlineKeyboardButton(
+        text='Refresh List',
+        callback_data='refresh'
+    )
+]
+
+msgid = 0
+chatid = 0
+@Bot.on_message(filters.text)
+async def start(bot, m):
+    keyboard = []
+    keyboard.append(refresh_button)
+    try:
+        for file in glob.glob('C:/dlmacvin/1aa/*'):
+            keyboard.append(
+                [
+                    InlineKeyboardButton(
+                        text=file.rsplit('/', 1)[1].replace('1aa\\', ''),
+                        callback_data=file.rsplit('/', 1)[1].replace('1aa\\', '')
+                    )
+                ]
+            )
+    except Exception as e:
+        print(e)
+        return
+    keyboard.append(refresh_button)
+    #await bot.send_message(chat_id=id, text="Which one?", reply_markup=InlineKeyboardMarkup(keyboard))
+    await m.reply_text(text="Which one?", reply_markup=InlineKeyboardMarkup(keyboard))
+
+
+@Bot.on_callback_query()
+async def callback(bot, update):
+    global chatid
+    global msgid
+
 
 @bot.on_message(filters.video | filters.document)
 async def startt(bot, m):
