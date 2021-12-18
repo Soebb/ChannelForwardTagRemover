@@ -79,9 +79,10 @@ async def callback(bot, update):
     try:
         for file in glob.glob(vdir):
             if file.rsplit('/', 1)[1].replace('Telegram Desktop\\', '') == update.data:
-                await update.message.reply_text(text='downloading..')
-                vname = vid.file_name
-                ext = '.' + vname.rsplit(".", 1)[1]
+                await update.message.reply_text('downloading..')
+                vname = file.rsplit('/', 1)[1].replace('Telegram Desktop\\', '')
+                ext = '.' + file.rsplit('.', 1)[1]
+                
                 v = dir + '1' + ext
     
     try:
