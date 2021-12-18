@@ -40,8 +40,8 @@ async def start(bot, m):
             keyboard.append(
                 [
                     InlineKeyboardButton(
-                        text=file.rsplit('/', 1)[1].replace('1aa\\', ''),
-                        callback_data=file.rsplit('/', 1)[1].replace('1aa\\', '')
+                        text=file.rsplit('/', 1)[1].replace('Telegram Desktop\\', ''),
+                        callback_data=file.rsplit('/', 1)[1].replace('Telegram Desktop\\', '')
                     )
                 ]
             )
@@ -65,8 +65,8 @@ async def callback(bot, update):
                 keyboard.append(
                     [
                         InlineKeyboardButton(
-                            text=file.rsplit('/', 1)[1].replace('1aa\\', ''),
-                            callback_data=file.rsplit('/', 1)[1].replace('1aa\\', '')
+                            text=file.rsplit('/', 1)[1].replace('Telegram Desktop\\', ''),
+                            callback_data=file.rsplit('/', 1)[1].replace('Telegram Desktop\\', '')
                         )
                     ]
                 )
@@ -78,13 +78,11 @@ async def callback(bot, update):
         return
     try:
         for file in glob.glob(vdir):
-            if file.rsplit('/', 1)[1].replace('1aa\\', '') == update.data:
-               
-    await m.reply('downloading..')
-    vid = m.video or m.document
-    vname = vid.file_name
-    ext = '.' + vname.rsplit(".", 1)[1]
-    v = dir + '1' + ext
+            if file.rsplit('/', 1)[1].replace('Telegram Desktop\\', '') == update.data:
+                await update.message.reply_text(text='downloading..')
+                vname = vid.file_name
+                ext = '.' + vname.rsplit(".", 1)[1]
+                v = dir + '1' + ext
     
     try:
         os.remove(v)
