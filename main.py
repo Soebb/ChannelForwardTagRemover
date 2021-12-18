@@ -1,5 +1,5 @@
 from pydub import AudioSegment
-import os, time, glob, datetime, subprocess
+import os, time, glob, datetime
 from pyromod import listen
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
@@ -22,7 +22,13 @@ refresh_button = [
         callback_data='refresh'
     )
 ]
-
+dir = os.getcwd().replace('\\', '/') + '/'
+vdir = 'C:/Users/Administrator/Downloads/Telegram Desktop/*'
+a1 = dir + '1.mp3'
+a2 = dir + '2.mp3'
+a3 = dir + '3.mp3'
+a6 = dir + '6.mp3'
+aac = dir + 'a.aac'
 msgid = 0
 chatid = 0
 @Bot.on_message(filters.text)
@@ -30,7 +36,7 @@ async def start(bot, m):
     keyboard = []
     keyboard.append(refresh_button)
     try:
-        for file in glob.glob('C:/dlmacvin/1aa/*'):
+        for file in glob.glob(vdir):
             keyboard.append(
                 [
                     InlineKeyboardButton(
@@ -47,7 +53,7 @@ async def start(bot, m):
     await m.reply_text(text="Which one?", reply_markup=InlineKeyboardMarkup(keyboard))
 
 
-@Bot.on_callback_query()
+@bot.on_callback_query()
 async def callback(bot, update):
     global chatid
     global msgid
@@ -55,7 +61,7 @@ async def callback(bot, update):
         keyboard = []
         keyboard.append(refresh_button)
         try:
-            for file in glob.glob('C:/dlmacvin/1aa/*'):
+            for file in glob.glob(vdir):
                 keyboard.append(
                     [
                         InlineKeyboardButton(
@@ -70,20 +76,16 @@ async def callback(bot, update):
         keyboard.append(refresh_button)
         await update.message.edit(text="Which one?", reply_markup=InlineKeyboardMarkup(keyboard))
         return
-
-@bot.on_message(filters.video | filters.document)
-async def startt(bot, m):
-    dir = os.getcwd().replace('\\', '/') + '/'
+    try:
+        for file in glob.glob(vdir):
+            if file.rsplit('/', 1)[1].replace('1aa\\', '') == update.data:
+               
     await m.reply('downloading..')
     vid = m.video or m.document
     vname = vid.file_name
     ext = '.' + vname.rsplit(".", 1)[1]
     v = dir + '1' + ext
-    a1 = dir + '1.mp3'
-    a2 = dir + '2.mp3'
-    a3 = dir + '3.mp3'
-    a6 = dir + '6.mp3'
-    aac = dir + 'a.aac'
+    
     try:
         os.remove(v)
     except:
