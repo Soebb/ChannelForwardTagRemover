@@ -80,7 +80,6 @@ async def callback(bot, update):
     try:
         for file in glob.glob(vdir):
             if file.rsplit('/', 1)[1].replace('Telegram Desktop\\', '') == update.data:
-                await update.message.reply_text('downloading..')
                 vname = file.rsplit('/', 1)[1].replace('Telegram Desktop\\', '')
                 ext = '.' + file.rsplit('.', 1)[1]
                 v = 'C:/Users/Administrator/Downloads/Telegram Desktop/' + vname
@@ -143,7 +142,7 @@ async def callback(bot, update):
                     t6 = t6 + tt6[:1] + "00"
                 else:
                     t6 = t6 + "000"
-
+                processmsg = await update.message.reply_text('processing..')
                 a2_1 = AudioSegment.from_mp3(dir + '2.1.mp3')
                 a2_2 = AudioSegment.from_mp3(dir + '2.2.mp3')
                 aa2 = a2_1.append(a2_2)
@@ -151,6 +150,23 @@ async def callback(bot, update):
                 os.system(f'ffmpeg -i "{v}" -vn -i {a1} -vn -i {a2} -vn -i {a3} -vn -i {a6} -vn -filter_complex "[1]adelay=00000|00000[b]; [2]adelay={t2}|{t2}[c]; [3]adelay={t3}|{t3}[d]; [4]adelay={t6}|{t6}[e]; [0][b][c][d][e]amix=5" -c:a aac -b:a 125k -y {aac}')   
                 time.sleep(10)
                 os.system(f'ffmpeg -i "{v}" -i {aac} -c copy -map 0:0 -map 1:0 -y "{vname}"')
-                
+                processmsg.delete()
+                t2t.delete()
+                t3t.delete()
+                t6t.delete()
+                t2.delete(True)
+                t3.delete(True)
+                t6.delete(True)
+                if chatid == 0:
+                    msg = await update.message.reply_text('Done! ' + vname)
+                    msgid = msg.message_id
+                elif chatid != 0:
+                    try:
+                        await bot.edit_message_text(update.message.chat.id, msgid, 'Done! ' + vname)
+                    except:
+                        await bot.edit_message_text(update.message.chat.id, msgid, 'تمام')
+                chatid = update.message.from_user.id
+    except:
+        pass
 
 bot.run()
