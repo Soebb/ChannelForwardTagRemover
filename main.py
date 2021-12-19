@@ -83,6 +83,7 @@ async def callback(bot, update):
                 vname = file.rsplit('/', 1)[1].replace('Telegram Desktop\\', '')
                 ext = '.' + file.rsplit('.', 1)[1]
                 v = 'C:/Users/Administrator/Downloads/Telegram Desktop/' + vname
+                vname = vname.replace('.ts', '.mp4')
                 try:
                     os.remove(a2)
                 except:
