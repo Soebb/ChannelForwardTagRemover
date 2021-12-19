@@ -83,11 +83,6 @@ async def callback(bot, update):
                 vname = file.rsplit('/', 1)[1].replace('Telegram Desktop\\', '')
                 ext = '.' + file.rsplit('.', 1)[1]
                 v = 'C:/Users/Administrator/Downloads/Telegram Desktop/' + vname
-
-                try:
-                    os.remove(v)
-                except:
-                    pass
                 try:
                     os.remove(a2)
                 except:
