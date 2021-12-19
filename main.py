@@ -3,7 +3,8 @@ import os, time, glob, datetime
 from pyromod import listen
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
-
+import PTN
+import shutil
 
 BOT_TOKEN = "5011115624:AAEDtnMcl3rXM9u-d-Su_YnHcilMyNcNPNw"
 API_ID = "4328913"
@@ -92,6 +93,9 @@ async def callback(bot, update):
                     os.remove(dir + '2.1.mp3')
                 except:
                     pass
+                n = PTN.parse(vname)
+                au2_1 = f'C:/All Projact Primer Pro/Audio Sound Serial Primer Pro Tag/{n["title"]}/2.1.mp3'
+                shutil.copyfile(au2_1, dir + '2.1.mp3')
                 askaud = await update.message.reply_text('صوت 2.1 رو بفرست تا با 2.2 ادغام کنم')
                 aud: Message = await bot.listen(update.message.chat.id, filters=filters.audio)
                 await bot.download_media(message=aud.audio, file_name=dir + '2.1.mp3')
