@@ -54,6 +54,20 @@ async def start(bot, m):
     #await bot.send_message(chat_id=id, text="Which one?", reply_markup=InlineKeyboardMarkup(keyboard))
     await m.reply_text(text="Which one?", reply_markup=InlineKeyboardMarkup(keyboard))
 
+def gettime(t2):
+    try:
+        tt2 = t2.text.split('.')[1]
+        t2 = t2.text.split('.')[0]
+        t2 = f'0{t2.text[:1]}:{t2.text[:3][1:]}:{t2.text[3:]}'
+    except:
+        tt2 = None
+        t2 = f'0{t2.text[:1]}:{t2.text[:3][1:]}:{t2.text[3:]}'
+    t2 = sum(x * int(t) for x, t in zip([1, 60, 3600], reversed(t2.split(":"))))
+    if tt2 != None:
+        t2 = t2 + tt2[:1] + "00"
+    else:
+        t2 = t2 + "000"
+    return t2
 
 @bot.on_callback_query()
 async def callback(bot, update):
@@ -94,7 +108,8 @@ async def callback(bot, update):
                 except:
                     pass
                 n = PTN.parse(vname)
-                au2_1 = f'C:/All Projact Primer Pro/Audio Sound Serial Primer Pro Tag/{n.title.replace("-", " ")}/2.1.mp3'
+                title = n['title'].replace("-", " ")
+                au2_1 = f'C:/All Projact Primer Pro/Audio Sound Serial Primer Pro Tag/{title}/2.1.mp3'
                 shutil.copyfile(au2_1, dir + '2.1.mp3')
                 askaud = await update.message.reply_text('صوت 2.1 رو بفرست تا با 2.2 ادغام کنم')
                 aud: Message = await bot.listen(update.message.chat.id, filters=filters.audio)
@@ -105,43 +120,14 @@ async def callback(bot, update):
                 t3: Message = await bot.listen(update.message.chat.id, filters=filters.text)
                 t6t = await update.message.reply_text('تایم صوت 6 رو بفرست\n6.mp3')
                 t6: Message = await bot.listen(update.message.chat.id, filters=filters.text)
-                try:
-                    tt2 = t2.text.split('.')[1]
-                    t2 = t2.text.split('.')[0]
-                    t2 = f'0{t2.text[:1]}:{t2.text[:3][1:]}:{t2.text[3:]}'
-                except:
-                    tt2 = None
-                    t2 = f'0{t2.text[:1]}:{t2.text[:3][1:]}:{t2.text[3:]}'
-                try:
-                    tt3 = t3.text.split('.')[1]
-                    t3 = t3.text.split('.')[0]
-                    t3 = f'0{t3.text[:1]}:{t3.text[:3][1:]}:{t3.text[3:]}'
-                except:
-                    tt3 = None
-                    t3 = f'0{t3.text[:1]}:{t3.text[:3][1:]}:{t3.text[3:]}'
-                try:
-                    tt6 = t6.text.split('.')[1]
-                    t6 = t6.text.split('.')[0]
-                    t6 = f'0{t6.text[:1]}:{t6.text[:3][1:]}:{t6.text[3:]}'
-                except:
-                    tt6 = None
-                    t6 = f'0{t6.text[:1]}:{t6.text[:3][1:]}:{t6.text[3:]}'
-
-                t2 = sum(x * int(t) for x, t in zip([1, 60, 3600], reversed(t2.split(":"))))
-                t3 = sum(x * int(t) for x, t in zip([1, 60, 3600], reversed(t3.split(":"))))
-                t6 = sum(x * int(t) for x, t in zip([1, 60, 3600], reversed(t6.split(":"))))
-                if tt2 != None:
-                    t2 = t2 + tt2[:1] + "00"
-                else:
-                    t2 = t2 + "000"
-                if tt3 != None:
-                    t3 = t3 + tt3[:1] + "00"
-                else:
-                    t3 = t3 + "000"
-                if tt6 != None:
-                    t6 = t6 + tt6[:1] + "00"
-                else:
-                    t6 = t6 + "000"
+                t2 = gettime(t2)
+                t3_1, t3_2, t3_3, t3_4, t3_5 = t3.split()
+                t3_1 = gettime(t3_1)
+                t3_2 = gettime(t3_2)
+                t3_3 = gettime(t3_3)
+                t3_4 = gettime(t3_4)
+                t3_5 = gettime(t3_5)
+                t6 = gettime(t6)
                 processmsg = await update.message.reply_text('processing..')
                 a2_1 = AudioSegment.from_mp3(dir + '2.1.mp3')
                 a2_2 = AudioSegment.from_mp3(dir + '2.2.mp3')
