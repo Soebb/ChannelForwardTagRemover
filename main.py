@@ -5,9 +5,9 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 
 
-BOT_TOKEN = " "
-API_ID = " "
-API_HASH = " "
+BOT_TOKEN = "5011115624:AAEDtnMcl3rXM9u-d-Su_YnHcilMyNcNPNw"
+API_ID = "4328913"
+API_HASH = "3230ec801f78a517c9a2ad6bebb7f7b4"
 
 bot = Client(
     ":memory:",
@@ -32,7 +32,7 @@ a6 = dir + '6.mp3'
 aac = dir + 'a.aac'
 msgid = 0
 chatid = 0
-@Bot.on_message(filters.text)
+@bot.on_message(filters.text)
 async def start(bot, m):
     keyboard = []
     keyboard.append(refresh_button)
