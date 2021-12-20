@@ -56,12 +56,12 @@ async def start(bot, m):
 
 def gettime(t2):
     try:
-        tt2 = t2.text.split('.')[1]
-        t2 = t2.text.split('.')[0]
+        tt2 = t2.split('.')[1]
+        t2 = t2.split('.')[0]
         t2 = f'0{t2[:1]}:{t2[:3][1:]}:{t2[3:]}'
     except:
         tt2 = None
-        t2 = f'0{t2.text[:1]}:{t2.text[:3][1:]}:{t2.text[3:]}'
+        t2 = f'0{t2[:1]}:{t2[:3][1:]}:{t2[3:]}'
     t2 = sum(x * int(t) for x, t in zip([1, 60, 3600], reversed(t2.split(":"))))
     if tt2 != None:
         t2 = f'{t2}{tt2[:1]}00'
@@ -120,14 +120,14 @@ async def callback(bot, update):
                 t3: Message = await bot.listen(update.message.chat.id, filters=filters.text)
                 t6t = await update.message.reply_text('تایم صوت 6 رو بفرست\n6.mp3')
                 t6: Message = await bot.listen(update.message.chat.id, filters=filters.text)
-                t2 = gettime(t2)
-                t3_1, t3_2, t3_3, t3_4, t3_5 = t3.split()
+                t2 = gettime(t2.text)
+                t3_1, t3_2, t3_3, t3_4, t3_5 = t3.text.split()
                 t3_1 = gettime(t3_1)
                 t3_2 = gettime(t3_2)
                 t3_3 = gettime(t3_3)
                 t3_4 = gettime(t3_4)
                 t3_5 = gettime(t3_5)
-                t6 = gettime(t6)
+                t6 = gettime(t6.text)
                 processmsg = await update.message.reply_text('processing..')
                 a2_1 = AudioSegment.from_mp3(dir + '2.1.mp3')
                 a2_2 = AudioSegment.from_mp3(dir + '2.2.mp3')
@@ -152,7 +152,8 @@ async def callback(bot, update):
                     except:
                         await bot.edit_message_text(update.message.chat.id, msgid, 'تمام')
                 chatid = update.message.from_user.id
-    except:
-        pass
+    except Exception as e:
+        print(e)
+        return
 
 bot.run()
