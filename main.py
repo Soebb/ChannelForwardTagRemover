@@ -133,7 +133,7 @@ async def callback(bot, update):
                 a2_2 = AudioSegment.from_mp3(dir + '2.2.mp3')
                 aa2 = a2_1.append(a2_2)
                 aa2.export(dir+"2.mp3", format="mp3")
-                os.system(f'ffmpeg -i "{v}" -vn -i {a1} -vn -i {a2} -vn -i {a3} -vn -i {a6} -vn -filter_complex "[1]adelay=00000|00000[b]; [2]adelay={t2}|{t2}[c]; [3]adelay={t3}|{t3}[d]; [4]adelay={t6}|{t6}[e]; [0][b][c][d][e]amix=5" -c:a aac -b:a 125k -y {aac}')   
+                os.system(f'ffmpeg -i "{v}" -vn -i {a1} -vn -i {a2} -vn -i {a3} -vn -i {a3} -vn -i {a3} -vn -i {a3} -vn -i {a3} -vn -i {a6} -vn -filter_complex "[1]adelay=00000|00000[b]; [2]adelay={t2}|{t2}[c]; [3]adelay={t3}|{t3}[d]; [4]adelay={t6}|{t6}[e]; [0][b][c][d][e]amix=5" -c:a aac -b:a 125k -y {aac}')   
                 time.sleep(10)
                 os.system(f'ffmpeg -i "{v}" -i {aac} -c copy -map 0:0 -map 1:0 -y "{vname}"')
                 processmsg.delete()
