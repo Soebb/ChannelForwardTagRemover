@@ -1,5 +1,5 @@
 from pydub import AudioSegment
-import os, time, glob, datetime
+import os, time, glob, datetime, subprocess, json
 from pyromod import listen
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
@@ -140,6 +140,11 @@ async def callback(bot, update):
                 audorg = AudioSegment.from_mp3(org)
                 aud1 = AudioSegment.from_mp3(a1)
                 aud6 = AudioSegment.from_mp3(a6)
+                info = subprocess.check_output('ffprobe -v quiet -show_streams -select_streams a:0 -of json "2.mp3"', shell=True).decode()
+                fields = json.loads(info)['streams'][0]
+                sec, milsec = fields['duration'].split(".")
+                time = int(sec + milsec[:3])
+
                 s1 = aud1.append(audorg[:t2], crossfade=1000)
                 s2 = s1.append(aud2, crossfade=1000)
                 #os.system(f'ffmpeg -i "{v}" -vn -i {a1} -vn -i {a2} -vn -i {a3} -vn -i {a6} -vn -filter_complex "[1]adelay=00000|00000[b]; [2]adelay={t2}|{t2}[c]; [3]adelay={t3_1}|{t3_1}[d]; [3]adelay={t3_2}|{t3_2}[e]; [3]adelay={t3_3}|{t3_3}[f]; [3]adelay={t3_4}|{t3_4}[g]; [3]adelay={t3_5}|{t3_5}[h]; [4]adelay={t6}|{t6}[i]; [0][b][c][d][e][f][g][h][i]amix=9" -c:a aac -b:a 125k -y {aac}')   
