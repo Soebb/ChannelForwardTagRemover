@@ -58,15 +58,15 @@ def gettime(t2):
     try:
         tt2 = t2.text.split('.')[1]
         t2 = t2.text.split('.')[0]
-        t2 = f'0{t2.text[:1]}:{t2.text[:3][1:]}:{t2.text[3:]}'
+        t2 = f'0{t2[:1]}:{t2[:3][1:]}:{t2[3:]}'
     except:
         tt2 = None
         t2 = f'0{t2.text[:1]}:{t2.text[:3][1:]}:{t2.text[3:]}'
     t2 = sum(x * int(t) for x, t in zip([1, 60, 3600], reversed(t2.split(":"))))
     if tt2 != None:
-        t2 = t2 + tt2[:1] + "00"
+        t2 = f'{t2}{tt2[:1]}00'
     else:
-        t2 = t2 + "000"
+        t2 = f'{t2}000'
     return t2
 
 @bot.on_callback_query()
