@@ -1,5 +1,5 @@
 from pydub import AudioSegment
-import os, time, glob, datetime, subprocess, json
+import os, time, glob, datetime
 from pyromod import listen
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
@@ -108,6 +108,10 @@ async def callback(bot, update):
                     os.remove(dir + '2.1.mp3')
                 except:
                     pass
+                try:
+                    os.remove(dir + 'mix.mp3')
+                except:
+                    pass
                 n = PTN.parse(vname)
                 title = n['title'].replace("-", " ")
                 au2_1 = f'C:/All Projact Primer Pro/Audio Sound Serial Primer Pro Tag/{title}/2.1.mp3'
@@ -116,19 +120,19 @@ async def callback(bot, update):
                 aud: Message = await bot.listen(update.message.chat.id, filters=filters.audio)
                 await bot.download_media(message=aud.audio, file_name=dir + '2.1.mp3')
                 t2t = await update.message.reply_text('تایم صوت 2 (2.2 + 2.1) رو بفرست')
-                t2: Message = await bot.listen(update.message.chat.id, filters=filters.text)
+                t22: Message = await bot.listen(update.message.chat.id, filters=filters.text)
                 t3t = await update.message.reply_text('تایم صوت 3 رو بفرست\n3.mp3')
-                t3: Message = await bot.listen(update.message.chat.id, filters=filters.text)
+                t33: Message = await bot.listen(update.message.chat.id, filters=filters.text)
                 t6t = await update.message.reply_text('تایم صوت 6 رو بفرست\n6.mp3')
-                t6: Message = await bot.listen(update.message.chat.id, filters=filters.text)
-                t2 = int(gettime(t2.text))
-                t3_1, t3_2, t3_3, t3_4, t3_5 = t3.text.split()
+                t66: Message = await bot.listen(update.message.chat.id, filters=filters.text)
+                t2 = int(gettime(t22.text))
+                t3_1, t3_2, t3_3, t3_4, t3_5 = t33.text.split()
                 t3_1 = int(gettime(t3_1))
                 t3_2 = int(gettime(t3_2))
                 t3_3 = int(gettime(t3_3))
                 t3_4 = int(gettime(t3_4))
                 t3_5 = int(gettime(t3_5))
-                t6 = int(gettime(t6.text))
+                t6 = int(gettime(t66.text))
                 processmsg = await update.message.reply_text('processing..')
                 a2_1 = AudioSegment.from_mp3(dir + '2.1.mp3')
                 a2_2 = AudioSegment.from_mp3(dir + '2.2.mp3')
@@ -140,7 +144,6 @@ async def callback(bot, update):
                 audorg = AudioSegment.from_mp3(org)
                 aud1 = AudioSegment.from_mp3(a1)
                 aud6 = AudioSegment.from_mp3(a6)
-                
                 out = audorg.overlay(aud1, gain_during_overlay=-2)
                 out = out.overlay(aud2, position=t2, gain_during_overlay=-2)
                 out = out.overlay(aud3, position=t3_1, gain_during_overlay=-2)
@@ -149,21 +152,17 @@ async def callback(bot, update):
                 out = out.overlay(aud3, position=t3_4, gain_during_overlay=-2)
                 out = out.overlay(aud3, position=t3_5, gain_during_overlay=-2)
                 out = out.overlay(aud6, position=t6, gain_during_overlay=-2)
-
                 out.export(dir+"mix.mp3", format="mp3")
-                
-                
-                #os.system(f'ffmpeg -i "{v}" -vn -i {a1} -vn -i {a2} -vn -i {a3} -vn -i {a6} -vn -filter_complex "[1]adelay=00000|00000[b]; [2]adelay={t2}|{t2}[c]; [3]adelay={t3_1}|{t3_1}[d]; [3]adelay={t3_2}|{t3_2}[e]; [3]adelay={t3_3}|{t3_3}[f]; [3]adelay={t3_4}|{t3_4}[g]; [3]adelay={t3_5}|{t3_5}[h]; [4]adelay={t6}|{t6}[i]; [0][b][c][d][e][f][g][h][i]amix=9" -c:a aac -b:a 125k -y {aac}')   
-                # time.sleep(10)
-                os.system(f'ffmpeg -i mix.mp3 {aac}')
-                os.system(f'ffmpeg -i "{v}" -i {aac} -c copy -map 0:0 -map 1:0 -y "{vname}"')
+                os.system(f'ffmpeg -i mix.mp3 a.aac')
+                time.sleep(10)
+                os.system(f'ffmpeg -i "{v}" -i a.aac -c copy -map 0:0 -map 1:0 -y "{vname}"')
                 processmsg.delete()
                 t2t.delete()
                 t3t.delete()
                 t6t.delete()
-                t2.delete(True)
-                t3.delete(True)
-                t6.delete(True)
+                t22.delete(True)
+                t33.delete(True)
+                t66.delete(True)
                 if chatid == 0:
                     msg = await update.message.reply_text('Done! ' + vname)
                     msgid = msg.message_id
