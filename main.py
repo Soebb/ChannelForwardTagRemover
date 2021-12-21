@@ -121,14 +121,14 @@ async def callback(bot, update):
                 t3: Message = await bot.listen(update.message.chat.id, filters=filters.text)
                 t6t = await update.message.reply_text('تایم صوت 6 رو بفرست\n6.mp3')
                 t6: Message = await bot.listen(update.message.chat.id, filters=filters.text)
-                t2 = gettime(t2.text)
+                t2 = int(gettime(t2.text))
                 t3_1, t3_2, t3_3, t3_4, t3_5 = t3.text.split()
-                t3_1 = gettime(t3_1)
-                t3_2 = gettime(t3_2)
-                t3_3 = gettime(t3_3)
-                t3_4 = gettime(t3_4)
-                t3_5 = gettime(t3_5)
-                t6 = gettime(t6.text)
+                t3_1 = int(gettime(t3_1))
+                t3_2 = int(gettime(t3_2))
+                t3_3 = int(gettime(t3_3))
+                t3_4 = int(gettime(t3_4))
+                t3_5 = int(gettime(t3_5))
+                t6 = int(gettime(t6.text))
                 processmsg = await update.message.reply_text('processing..')
                 a2_1 = AudioSegment.from_mp3(dir + '2.1.mp3')
                 a2_2 = AudioSegment.from_mp3(dir + '2.2.mp3')
@@ -142,6 +142,9 @@ async def callback(bot, update):
                 aud6 = AudioSegment.from_mp3(a6)
                 
                 out = audorg.overlay(aud1, gain_during_overlay=-2)
+                out = out.overlay(aud2, position=t2
+
+
                 out.export(dir+"mix.mp3", format="mp3")
                 info = subprocess.check_output('ffprobe -v quiet -show_streams -select_streams a:0 -of json "2.mp3"', shell=True).decode()
                 fields = json.loads(info)['streams'][0]
