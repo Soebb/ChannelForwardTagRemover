@@ -138,18 +138,20 @@ async def callback(bot, update):
                 aud2 = AudioSegment.from_mp3(a2)
                 aud3 = AudioSegment.from_mp3(a3)
                 audorg = AudioSegment.from_mp3(org)
-                aud1 = AudioSegment.from_mp3(a1) + 2
+                aud1 = AudioSegment.from_mp3(a1)
                 aud6 = AudioSegment.from_mp3(a6)
+                
+                out = audorg.overlay(aud1, gain_during_overlay=-2)
+                out.export(dir+"mix.mp3", format="mp3")
                 info = subprocess.check_output('ffprobe -v quiet -show_streams -select_streams a:0 -of json "2.mp3"', shell=True).decode()
                 fields = json.loads(info)['streams'][0]
                 sec, milsec = fields['duration'].split(".")
                 time = int(sec + milsec[:3])
-                tim = int(t2) + time
-                s1 = aud1.append(audorg[:tim], crossfade=3865)
-                s2 = s1.append(aud2, crossfade=time)
-                s3 = s2 + s
+                
+                
                 #os.system(f'ffmpeg -i "{v}" -vn -i {a1} -vn -i {a2} -vn -i {a3} -vn -i {a6} -vn -filter_complex "[1]adelay=00000|00000[b]; [2]adelay={t2}|{t2}[c]; [3]adelay={t3_1}|{t3_1}[d]; [3]adelay={t3_2}|{t3_2}[e]; [3]adelay={t3_3}|{t3_3}[f]; [3]adelay={t3_4}|{t3_4}[g]; [3]adelay={t3_5}|{t3_5}[h]; [4]adelay={t6}|{t6}[i]; [0][b][c][d][e][f][g][h][i]amix=9" -c:a aac -b:a 125k -y {aac}')   
                 time.sleep(10)
+                os.system(f'ffmpeg -i mix.mp3 {aac}')
                 os.system(f'ffmpeg -i "{v}" -i {aac} -c copy -map 0:0 -map 1:0 -y "{vname}"')
                 processmsg.delete()
                 t2t.delete()
