@@ -23,7 +23,7 @@ refresh_button = [
         callback_data='refresh'
     )
 ]
-dir = os.getcwd().replace('\\', '/') + '/'
+dir = 'C:/voicetag/'
 vdir = 'C:/Users/Administrator/Downloads/Telegram Desktop/*'
 
 a1 = dir + '1.mp3'
