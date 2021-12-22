@@ -27,16 +27,16 @@ refresh_button = [
 folder = 'C:/Users/Administrator/Downloads/Telegram Desktop'
 
 
+msgid = 0
+chatid = 0
+vdir = folder + '/*'
+dir = 'C:/voicetag/'
 a1 = dir + '1.mp3'
 a2 = dir + '2.mp3'
 a3 = dir + '3.mp3'
 a6 = dir + '6.mp3'
 aac = dir + 'a.aac'
 org = dir + 'org.mp3'
-msgid = 0
-chatid = 0
-vdir = folder + '/*'
-dir = 'C:/voicetag/'
 main = folder.rsplit('/', 1)[1] + '\\'
 @bot.on_message(filters.text)
 async def start(bot, m):
