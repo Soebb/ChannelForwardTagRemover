@@ -127,5 +127,8 @@ async def callback(bot, m):
         time.sleep(10)
         os.system(f'ffmpeg -i "{file}" -i a.aac -c copy -map 0:0 -map 1:0 -y "{vname}"')
         await m.reply_video(video=vname)
+    except Exception as e:
+        print(e)
+
 
 bot.run()
