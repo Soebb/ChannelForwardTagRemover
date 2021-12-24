@@ -59,71 +59,71 @@ def gettime(t2):
         t2 = f'{t2}000'
     return t2
 
-@bot.on_message(filters.video | filters.document)
+@bot.on_message(filters.video)
 async def callback(bot, m):
     try:
-        if vname:
-            if vname != "refresh":
-                #vname = file.rsplit('/', 1)[1].replace('Telegram Desktop\\', '')
-                ext = '.' + file.rsplit('.', 1)[1]
-                v = folder + '/' + vname
-                vname = vname.replace('.ts', '.mp4')
-                try:
-                    os.remove(a2)
-                except:
-                    pass
-                try:
-                    os.remove(dir + '2.1.mp3')
-                except:
-                    pass
-                try:
-                    os.remove(dir + 'mix.mp3')
-                except:
-                    pass
-                n = PTN.parse(vname)
-                title = n['title'].replace("-", " ")
-                au2_1 = f'C:/All Projact Primer Pro/Audio Sound Serial Primer Pro Tag/{title}/2.1.mp3'
-                shutil.copyfile(au2_1, dir + '2.1.mp3')
-                askaud = await update.message.reply_text('صوت 2.1 رو بفرست تا با 2.2 ادغام کنم')
-                aud: Message = await bot.listen(update.message.chat.id, filters=filters.audio)
-                await bot.download_media(message=aud.audio, file_name=dir + '2.1.mp3')
-                t2t = await update.message.reply_text('تایم صوت 2 (2.2 + 2.1) رو بفرست')
-                t22: Message = await bot.listen(update.message.chat.id, filters=filters.text)
-                t3t = await update.message.reply_text('تایم صوت 3 رو بفرست\n3.mp3')
-                t33: Message = await bot.listen(update.message.chat.id, filters=filters.text)
-                t6t = await update.message.reply_text('تایم صوت 6 رو بفرست\n6.mp3')
-                t66: Message = await bot.listen(update.message.chat.id, filters=filters.text)
-                t2 = int(gettime(t22.text))
-                t3_1, t3_2, t3_3, t3_4, t3_5 = t33.text.split()
-                t3_1 = int(gettime(t3_1))
-                t3_2 = int(gettime(t3_2))
-                t3_3 = int(gettime(t3_3))
-                t3_4 = int(gettime(t3_4))
-                t3_5 = int(gettime(t3_5))
-                t6 = int(gettime(t66.text))
-                processmsg = await update.message.reply_text('processing..')
-                a2_1 = AudioSegment.from_mp3(dir + '2.1.mp3')
-                a2_2 = AudioSegment.from_mp3(dir + '2.2.mp3')
-                aa2 = a2_1.append(a2_2)
-                aa2.export(dir+"2.mp3", format="mp3")
-                os.system(f'ffmpeg -i "{v}" -vn -y org.mp3')
-                aud2 = AudioSegment.from_mp3(a2)
-                aud3 = AudioSegment.from_mp3(a3)
-                audorg = AudioSegment.from_mp3(org)
-                aud1 = AudioSegment.from_mp3(a1)
-                aud6 = AudioSegment.from_mp3(a6)
-                out = audorg.overlay(aud1, gain_during_overlay=-2)
-                out = out.overlay(aud2, position=t2, gain_during_overlay=-2)
-                out = out.overlay(aud3, position=t3_1, gain_during_overlay=-2)
-                out = out.overlay(aud3, position=t3_2, gain_during_overlay=-2)
-                out = out.overlay(aud3, position=t3_3, gain_during_overlay=-2)
-                out = out.overlay(aud3, position=t3_4, gain_during_overlay=-2)
-                out = out.overlay(aud3, position=t3_5, gain_during_overlay=-2)
-                out = out.overlay(aud6, position=t6, gain_during_overlay=-2)
-                out.export(dir+"mix.mp3", format="mp3")
-                os.system(f'ffmpeg -i mix.mp3 a.aac')
-                time.sleep(10)
-                os.system(f'ffmpeg -i "{v}" -i a.aac -c copy -map 0:0 -map 1:0 -y "{vname}"')
-                await m.reply_video(video=hh)
+        vname = m.video.file_name
+        await m.reply("downloading..")
+        file = await bot.download_media(message=m, file_name='temp/')
+        ext = '.' + file.rsplit('.', 1)[1]
+        #v = folder + '/' + vname
+        vname = vname.replace('.ts', '.mp4')
+        try:
+            os.remove(a2)
+        except:
+            pass
+        try:
+            os.remove(dir + '2.1.mp3')
+        except:
+            pass
+        try:
+            os.remove(dir + 'mix.mp3')
+        except:
+            pass
+        n = PTN.parse(vname)
+        title = n['title'].replace("-", " ")
+        au2_1 = f'C:/All Projact Primer Pro/Audio Sound Serial Primer Pro Tag/{title}/2.1.mp3'
+        shutil.copyfile(au2_1, dir + '2.1.mp3')
+        askaud = await update.message.reply_text('صوت 2.1 رو بفرست تا با 2.2 ادغام کنم')
+        aud: Message = await bot.listen(update.message.chat.id, filters=filters.audio)
+        await bot.download_media(message=aud.audio, file_name=dir + '2.1.mp3')
+        t2t = await update.message.reply_text('تایم صوت 2 (2.2 + 2.1) رو بفرست')
+        t22: Message = await bot.listen(update.message.chat.id, filters=filters.text)
+        t3t = await update.message.reply_text('تایم صوت 3 رو بفرست\n3.mp3')
+        t33: Message = await bot.listen(update.message.chat.id, filters=filters.text)
+        t6t = await update.message.reply_text('تایم صوت 6 رو بفرست\n6.mp3')
+        t66: Message = await bot.listen(update.message.chat.id, filters=filters.text)
+        t2 = int(gettime(t22.text))
+        t3_1, t3_2, t3_3, t3_4, t3_5 = t33.text.split()
+        t3_1 = int(gettime(t3_1))
+        t3_2 = int(gettime(t3_2))
+        t3_3 = int(gettime(t3_3))
+        t3_4 = int(gettime(t3_4))
+        t3_5 = int(gettime(t3_5))
+        t6 = int(gettime(t66.text))
+        #processmsg = await update.message.reply_text('processing..')
+        a2_1 = AudioSegment.from_mp3(dir + '2.1.mp3')
+        a2_2 = AudioSegment.from_mp3(dir + '2.2.mp3')
+        aa2 = a2_1.append(a2_2)
+        aa2.export(dir+"2.mp3", format="mp3")
+        os.system(f'ffmpeg -i "{v}" -vn -y org.mp3')
+        aud2 = AudioSegment.from_mp3(a2)
+        aud3 = AudioSegment.from_mp3(a3)
+        audorg = AudioSegment.from_mp3(org)
+        aud1 = AudioSegment.from_mp3(a1)
+        aud6 = AudioSegment.from_mp3(a6)
+        out = audorg.overlay(aud1, gain_during_overlay=-2)
+        out = out.overlay(aud2, position=t2, gain_during_overlay=-2)
+        out = out.overlay(aud3, position=t3_1, gain_during_overlay=-2)
+        out = out.overlay(aud3, position=t3_2, gain_during_overlay=-2)
+        out = out.overlay(aud3, position=t3_3, gain_during_overlay=-2)
+        out = out.overlay(aud3, position=t3_4, gain_during_overlay=-2)
+        out = out.overlay(aud3, position=t3_5, gain_during_overlay=-2)
+        out = out.overlay(aud6, position=t6, gain_during_overlay=-2)
+        out.export(dir+"mix.mp3", format="mp3")
+        os.system(f'ffmpeg -i mix.mp3 a.aac')
+        time.sleep(10)
+        os.system(f'ffmpeg -i "{v}" -i a.aac -c copy -map 0:0 -map 1:0 -y "{vname}"')
+        await m.reply_video(video=hh)
 
 bot.run()
