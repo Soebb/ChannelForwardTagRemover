@@ -61,6 +61,8 @@ def gettime(t2):
 
 @bot.on_message(filters.video)
 async def callback(bot, m):
+    if not os.path.isdir('temp/'):
+        os.makedirs('temp/')
     try:
         vname = m.video.file_name
         await m.reply("downloading..")
