@@ -79,9 +79,9 @@ async def callback(bot, m):
         title = n['title'].replace("-", " ")
         au2_1 = f'C:/All Projact Primer Pro/Audio Sound Serial Primer Pro Tag/{title}/2.1.mp3'
         shutil.copyfile(au2_1, dir + '2.1.mp3')
-        askaud = await m.reply_text('صوت 2.1 رو بفرست تا با 2.2 ادغام کنم')
-        aud: Message = await bot.listen(m.chat.id, filters=filters.audio)
-        await bot.download_media(message=aud.audio, file_name=dir + '2.1.mp3')
+        #askaud = await m.reply_text('صوت 2.1 رو بفرست تا با 2.2 ادغام کنم')
+        #aud: Message = await bot.listen(m.chat.id, filters=filters.audio)
+        #await bot.download_media(message=aud.audio, file_name=dir + '2.1.mp3')
         t2t = await m.reply_text('تایم صوت 2 (2.2 + 2.1) رو بفرست')
         t22: Message = await bot.listen(m.chat.id, filters=filters.text)
         t3t = await m.reply_text('تایم صوت 3 رو بفرست\n3.mp3')
