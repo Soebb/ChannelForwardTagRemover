@@ -17,13 +17,6 @@ bot = Client(
     api_hash = API_HASH
 )
 
-refresh_button = [
-    InlineKeyboardButton(
-        text='Refresh List',
-        callback_data='refresh'
-    )
-]
-
 folder = 'C:/Users/Administrator/Downloads/Telegram Desktop'
 
 
