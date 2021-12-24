@@ -11,7 +11,7 @@ API_ID = "4328913"
 API_HASH = "3230ec801f78a517c9a2ad6bebb7f7b4"
 
 bot = Client(
-    ":memory:",
+    "Bot",
     bot_token = BOT_TOKEN,
     api_id = API_ID,
     api_hash = API_HASH
@@ -30,7 +30,7 @@ folder = 'C:/Users/Administrator/Downloads/Telegram Desktop'
 msgid = 0
 chatid = 0
 vdir = folder + '/*'
-dir = 'C:/voicetag/'
+dir = ''
 a1 = dir + '1.mp3'
 a2 = dir + '2.mp3'
 a3 = dir + '3.mp3'
@@ -40,25 +40,9 @@ org = dir + 'org.mp3'
 main = folder.rsplit('/', 1)[1] + '\\'
 @bot.on_message(filters.text)
 async def start(bot, m):
-    keyboard = []
-    keyboard.append(refresh_button)
-    try:
-        for file in glob.glob(vdir):
-            if file.endswith(('.ts', '.mp4', '.mkv')):
-                keyboard.append(
-                    [
-                        InlineKeyboardButton(
-                            text=file.rsplit('/', 1)[1].replace(main, ''),
-                            callback_data=file.rsplit('/', 1)[1].replace(main, '')
-                        )
-                    ]
-                )
-    except Exception as e:
-        print(e)
-        return
-    keyboard.append(refresh_button)
     #await bot.send_message(chat_id=id, text="Which one?", reply_markup=InlineKeyboardMarkup(keyboard))
-    await m.reply_text(text="Which one?", reply_markup=InlineKeyboardMarkup(keyboard))
+    #await m.reply_text(text="Which one?", reply_markup=InlineKeyboardMarkup(keyboard))
+    await m.reply_text(text="hi")
 
 def gettime(t2):
     try:
@@ -75,31 +59,8 @@ def gettime(t2):
         t2 = f'{t2}000'
     return t2
 
-@bot.on_callback_query()
-async def callback(bot, update):
-    global chatid
-    global msgid
-    if update.data == "refresh":
-        keyboard = []
-        keyboard.append(refresh_button)
-        try:
-            for file in glob.glob(vdir):
-                if file.endswith(('.ts', '.mp4', '.mkv')):
-                    keyboard.append(
-                        [
-                            InlineKeyboardButton(
-                                text=file.rsplit('/', 1)[1].replace(main, ''),
-                                callback_data=file.rsplit('/', 1)[1].replace(main, '')
-                            )
-                        ]
-                    )
-        except Exception as e:
-            print(e)
-            return
-        keyboard.append(refresh_button)
-        await update.message.edit(text="Which one?", reply_markup=InlineKeyboardMarkup(keyboard))
-        return
-    vname = update.data
+@bot.on_message(filters.video | filters.document)
+async def callback(bot, m):
     try:
         if vname:
             if vname != "refresh":
@@ -163,24 +124,6 @@ async def callback(bot, update):
                 os.system(f'ffmpeg -i mix.mp3 a.aac')
                 time.sleep(10)
                 os.system(f'ffmpeg -i "{v}" -i a.aac -c copy -map 0:0 -map 1:0 -y "{vname}"')
-                processmsg.delete()
-                t2t.delete()
-                t3t.delete()
-                t6t.delete()
-                t22.delete(True)
-                t33.delete(True)
-                t66.delete(True)
-                if chatid == 0:
-                    msg = await update.message.reply_text('Done! ' + vname)
-                    msgid = msg.message_id
-                elif chatid != 0:
-                    try:
-                        await bot.edit_message_text(update.message.chat.id, msgid, 'Done! ' + vname)
-                    except:
-                        await bot.edit_message_text(update.message.chat.id, msgid, 'تمام')
-                chatid = update.message.from_user.id
-    except Exception as e:
-        print(e)
-        return
+                await m.reply_video(video=hh)
 
 bot.run()
