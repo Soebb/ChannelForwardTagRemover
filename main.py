@@ -52,17 +52,17 @@ def gettime(t2):
         t2 = f'{t2}000'
     return t2
 
-@bot.on_message(filters.video)
+@bot.on_message(filters.audio)
 async def callback(bot, m):
     if not os.path.isdir('temp/'):
         os.makedirs('temp/')
     try:
-        vname = m.video.file_name
+        vname = m.audio.file_name
         await m.reply("downloading..")
         file = await bot.download_media(message=m, file_name='temp/')
         ext = '.' + file.rsplit('.', 1)[1]
         #v = folder + '/' + vname
-        vname = vname.replace('.ts', '.mp4')
+        #vname = vname.replace('.ts', '.mp4')
         try:
             os.remove(a2)
         except:
@@ -72,7 +72,7 @@ async def callback(bot, m):
         except:
             pass
         try:
-            os.remove(dir + 'mix.mp3')
+            os.remove('temp/mix.mp3')
         except:
             pass
         n = PTN.parse(vname)
@@ -101,10 +101,10 @@ async def callback(bot, m):
         a2_2 = AudioSegment.from_mp3(dir + '2.2.mp3')
         aa2 = a2_1.append(a2_2)
         aa2.export(dir+"2.mp3", format="mp3")
-        os.system(f'ffmpeg -i "{file}" -vn -y org.mp3')
+        #os.system(f'ffmpeg -i "{file}" -vn -y org.mp3')
         aud2 = AudioSegment.from_mp3(a2)
         aud3 = AudioSegment.from_mp3(a3)
-        audorg = AudioSegment.from_mp3(org)
+        audorg = AudioSegment.from_mp3(file)
         aud1 = AudioSegment.from_mp3(a1)
         aud6 = AudioSegment.from_mp3(a6)
         out = audorg.overlay(aud1, gain_during_overlay=-2)
@@ -115,11 +115,15 @@ async def callback(bot, m):
         out = out.overlay(aud3, position=t3_4, gain_during_overlay=-2)
         out = out.overlay(aud3, position=t3_5, gain_during_overlay=-2)
         out = out.overlay(aud6, position=t6, gain_during_overlay=-2)
-        out.export(dir+"mix.mp3", format="mp3")
-        os.system(f'ffmpeg -i mix.mp3 -y a.aac')
+        out.export("temp/mix.mp3", format="mp3")
+        #os.system(f'ffmpeg -i mix.mp3 -y a.aac')
         time.sleep(10)
-        os.system(f'ffmpeg -i "{file}" -i a.aac -c copy -map 0:0 -map 1:0 -y "{vname}"')
-        await m.reply_video(video=vname)
+        # os.system(f'ffmpeg -i "{file}" -i a.aac -c copy -map 0:0 -map 1:0 -y "{vname}"')
+        await m.reply_audio(audio='temp/mix.mp3')
+        try:
+            os.remove(file)
+        except:
+            pass
     except Exception as e:
         print(e)
 
