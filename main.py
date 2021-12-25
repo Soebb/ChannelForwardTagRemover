@@ -23,7 +23,7 @@ folder = 'C:/Users/Administrator/Downloads/Telegram Desktop'
 msgid = 0
 chatid = 0
 vdir = folder + '/*'
-dir = ''
+dir = 'C:/voicetag/'
 a1 = dir + '1.mp3'
 a2 = dir + '2.mp3'
 a3 = dir + '3.mp3'
@@ -57,8 +57,8 @@ async def callback(bot, m):
     if not os.path.isdir('temp/'):
         os.makedirs('temp/')
     media = m.audio or m.video or m.document
+    vname = media.file_name
     try:
-        vname = media.file_name
         await m.reply("downloading..")
         file = 'temp/input.mp3'
         await m.download(file)
