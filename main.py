@@ -52,14 +52,16 @@ def gettime(t2):
         t2 = f'{t2}000'
     return t2
 
-@bot.on_message(filters.audio)
+@bot.on_message(filters.audio | filters.video | filters.document)
 async def callback(bot, m):
     if not os.path.isdir('temp/'):
         os.makedirs('temp/')
+    media = m.audio or m.video or m.document
     try:
-        vname = m.audio.file_name
+        vname = media.file_name
         await m.reply("downloading..")
-        file = await bot.download_media(message=m, file_name='temp/')
+        file = 'temp/input.mp3'
+        await m.download(file)
         ext = '.' + file.rsplit('.', 1)[1]
         #v = folder + '/' + vname
         #vname = vname.replace('.ts', '.mp4')
