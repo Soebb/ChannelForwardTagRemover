@@ -58,10 +58,17 @@ async def callback(bot, m):
         os.makedirs('temp/')
     media = m.audio or m.video or m.document
     vname = media.file_name
+    file = 'temp/input.mp3'
     try:
         await m.reply("downloading..")
-        file = 'temp/input.mp3'
-        await m.download(file)
+        if vname.rsplit('.', 1)[1].lower() == "mp3":
+            await m.download(file)
+        else:
+            fil = await bot.download_media(message=m, file_name='temp/')
+            os.system(f'ffmpeg -i "{fil}" -vn -y {file}')
+
+        #file = 'temp/input.mp3'
+        #await m.download(file)
         ext = '.' + file.rsplit('.', 1)[1]
         #v = folder + '/' + vname
         #vname = vname.replace('.ts', '.mp4')
