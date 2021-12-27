@@ -1,24 +1,19 @@
 from pydub import AudioSegment
 import os, time, glob, datetime
-from pyromod import listen
-from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 import PTN
 import shutil
+from telethon import TelegramClient, events
 
-BOT_TOKEN = "5011115624:AAEDtnMcl3rXM9u-d-Su_YnHcilMyNcNPNw"
-API_ID = "4328913"
-API_HASH = "3230ec801f78a517c9a2ad6bebb7f7b4"
 
-bot = Client(
-    "Bot",
-    bot_token = BOT_TOKEN,
-    api_id = API_ID,
-    api_hash = API_HASH
-)
+BOT_TOKEN = " "
+
+try:
+    Bot = TelegramClient("Bot", 6, "eb06d4abfb49dc3eeb1aeb98ae0f581e").start(bot_token=BOT_TOKEN)
+except Exception as e:
+    print(e)
+
 
 folder = 'C:/Users/Administrator/Downloads/Telegram Desktop'
-
 
 msgid = 0
 chatid = 0
@@ -31,11 +26,6 @@ a6 = dir + '6.mp3'
 aac = dir + 'a.aac'
 org = dir + 'org.mp3'
 main = folder.rsplit('/', 1)[1] + '\\'
-@bot.on_message(filters.text)
-async def start(bot, m):
-    #await bot.send_message(chat_id=id, text="Which one?", reply_markup=InlineKeyboardMarkup(keyboard))
-    #await m.reply_text(text="Which one?", reply_markup=InlineKeyboardMarkup(keyboard))
-    await m.reply_text(text="hi")
 
 def gettime(t2):
     try:
@@ -52,12 +42,11 @@ def gettime(t2):
         t2 = f'{t2}000'
     return t2
 
-@bot.on_message(filters.audio | filters.video | filters.document)
-async def callback(bot, m):
+
     if not os.path.isdir('temp/'):
         os.makedirs('temp/')
-    media = m.audio or m.video or m.document
-    vname = media.file_name
+    #media = m.audio or m.video or m.document
+    vname = event.file_name
     file = 'temp/input.mp3'
     try:
         await m.reply("downloading..")
@@ -128,7 +117,8 @@ async def callback(bot, m):
         #os.system(f'ffmpeg -i mix.mp3 -y a.aac')
         time.sleep(10)
         # os.system(f'ffmpeg -i "{file}" -i a.aac -c copy -map 0:0 -map 1:0 -y "{vname}"')
-        await m.reply_audio(audio='temp/mix.mp3')
+        #await m.reply_audio(audio='temp/mix.mp3')
+        await Bot.send_file(event.chat_id, file='temp/mix.mp3')
         try:
             os.remove(file)
         except:
