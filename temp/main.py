@@ -56,9 +56,9 @@ async def expor(event):
     try:
         #await m.reply("downloading..")
         if vname.rsplit('.', 1)[1].lower() == "mp3":
-            await m.download(file)
+            await Bot.download_media(event.media, file)
         else:
-            fil = await bot.download_media(message=m, file_name='temp/')
+            fil = await Bot.download_media(event.media, 'temp/')
             os.system(f'ffmpeg -i "{fil}" -vn -y {file}')
 
         #file = 'temp/input.mp3'
