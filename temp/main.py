@@ -42,14 +42,19 @@ def gettime(t2):
         t2 = f'{t2}000'
     return t2
 
-
+@Bot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
+async def expor(event):
+    if event.text and event.text.startswith("/"):
+        await event.reply("ورودی رو بفرست")
+        return
+    await event.reply("processing..")
     if not os.path.isdir('temp/'):
         os.makedirs('temp/')
     #media = m.audio or m.video or m.document
     vname = event.file_name
     file = 'temp/input.mp3'
     try:
-        await m.reply("downloading..")
+        #await m.reply("downloading..")
         if vname.rsplit('.', 1)[1].lower() == "mp3":
             await m.download(file)
         else:
@@ -80,20 +85,24 @@ def gettime(t2):
         #askaud = await m.reply_text('صوت 2.1 رو بفرست تا با 2.2 ادغام کنم')
         #aud: Message = await bot.listen(m.chat.id, filters=filters.audio)
         #await bot.download_media(message=aud.audio, file_name=dir + '2.1.mp3')
-        t2t = await m.reply_text('تایم صوت 2 (2.2 + 2.1) رو بفرست')
-        t22: Message = await bot.listen(m.chat.id, filters=filters.text)
-        t3t = await m.reply_text('تایم صوت 3 رو بفرست\n3.mp3')
-        t33: Message = await bot.listen(m.chat.id, filters=filters.text)
-        t6t = await m.reply_text('تایم صوت 6 رو بفرست\n6.mp3')
-        t66: Message = await bot.listen(m.chat.id, filters=filters.text)
-        t2 = int(gettime(t22.text))
-        t3_1, t3_2, t3_3, t3_4, t3_5 = t33.text.split()
+        async with Bot.conversation(event.chat_id) as conv:
+            await conv.send_message('تایم صوت 2 بفرست')
+            response = await conv.get_response()
+            time2 = response.text
+            await conv.send_message('پنج تا تایم باهم بفرست واسه تگ سوم')
+            respons = await conv.get_response()
+            time3 = respons.text
+            await conv.send_message('تایم صوت 6 بفرست')
+            respon = await conv.get_response()
+            time6 = respon.text
+        t2 = int(gettime(time2))
+        t3_1, t3_2, t3_3, t3_4, t3_5 = time3.split()
         t3_1 = int(gettime(t3_1))
         t3_2 = int(gettime(t3_2))
         t3_3 = int(gettime(t3_3))
         t3_4 = int(gettime(t3_4))
         t3_5 = int(gettime(t3_5))
-        t6 = int(gettime(t66.text))
+        t6 = int(gettime(time6))
         #processmsg = await update.message.reply_text('processing..')
         a2_1 = AudioSegment.from_mp3(dir + '2.1.mp3')
         a2_2 = AudioSegment.from_mp3(dir + '2.2.mp3')
@@ -127,4 +136,5 @@ def gettime(t2):
         print(e)
 
 
-bot.run()
+
+Bot.run_until_disconnected()
