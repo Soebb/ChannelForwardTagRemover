@@ -6,11 +6,10 @@ from telethon import TelegramClient, events
 
 
 BOT_TOKEN = " "
+API_ID = "6"
+API_HASH = "eb06d4abfb49dc3eeb1aeb98ae0f581e"
 
-try:
-    Bot = TelegramClient("Bot", 6, "eb06d4abfb49dc3eeb1aeb98ae0f581e").start(bot_token=BOT_TOKEN)
-except Exception as e:
-    print(e)
+Bot = TelegramClient("Bot", int(API_ID), API_HASH).start(bot_token=BOT_TOKEN)
 
 
 folder = 'C:/Users/Administrator/Downloads/Telegram Desktop'
