@@ -84,14 +84,15 @@ async def callback(bot, update):
         keyboard.append(refresh_button)
         try:
             for file in glob.glob(vdir):
-                keyboard.append(
-                    [
-                        InlineKeyboardButton(
-                            text=file.rsplit('/', 1)[1].replace(main, ''),
-                            callback_data=file.rsplit('/', 1)[1].replace(main, '')
-                        )
-                    ]
-                )
+                if file.endswith(('.ts', '.mp4', '.mkv')):
+                    keyboard.append(
+                        [
+                            InlineKeyboardButton(
+                                text=file.rsplit('/', 1)[1].replace(main, ''),
+                                callback_data=file.rsplit('/', 1)[1].replace(main, '')
+                            )
+                        ]
+                    )
         except Exception as e:
             print(e)
             return
