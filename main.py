@@ -174,10 +174,9 @@ def button(update: Update, context: CallbackContext) -> None:
         pass
     text = None
 
-if __name__=='__main__':
-    updater = Updater(BOT_TOKEN, use_context=True)
-    dispatcher = updater.dispatcher
-    dispatcher.add_handler(CallbackQueryHandler(button))
-    dispatcher.add_handler(MessageHandler(Filters.text, start))
-    updater.start_polling()
-    updater.idle()
+updater = Updater(BOT_TOKEN, use_context=True)
+dispatcher = updater.dispatcher
+dispatcher.add_handler(CallbackQueryHandler(button))
+dispatcher.add_handler(MessageHandler(Filters.text, start))
+updater.start_polling()
+updater.idle()
