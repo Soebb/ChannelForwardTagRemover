@@ -3,7 +3,7 @@ import os, time, glob, datetime
 import PTN
 import shutil
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
-from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, CallbackContext
+from telegram.ext import Updater, MessageHandler, CallbackQueryHandler, CallbackContext, Filters
 
 BOT_TOKEN = " "
 
@@ -49,7 +49,7 @@ def start(update: Update, context: CallbackContext) -> None:
     if not "/" in update.message.text:
         msg = update.message.reply_text("ذخیره شد")
         text = update.message.text
-        msgid1 = msg.message.message_id
+        msgid1 = msg.message_id
         return
     keyboard = []
     keyboard.append(refresh_button)
@@ -72,7 +72,7 @@ def start(update: Update, context: CallbackContext) -> None:
     update.message.reply_text(text="Which one?", reply_markup=InlineKeyboardMarkup(keyboard))
     if text == None:
         msg = update.message.reply_text(" تایم‌هارو نفرستادی، اول همه‌ی تایم‌هارو یکجا باهم بفرست ")
-        msgid1 = msg.message.message_id
+        msgid1 = msg.message_id
 
 
 def button(update: Update, context: CallbackContext) -> None:
@@ -160,13 +160,15 @@ def button(update: Update, context: CallbackContext) -> None:
                 processmsg.delete()
                 if msgid2 == 0:
                     msg = update.message.reply_text('Done! ' + vname)
-                    msgid2 = msg.message.message_id
+                    msgid2 = msg.message_id
                 elif msgid2 != 0:
                     try:
                         context.bot.edit_message_text(text='Done! ' + vname, chat_id=update.message.chat.id, message_id=msgid2)
                     except:
-                        context.bot.edit_message_text(text='تمام', chat_id=update.message.chat.id, message_id=msgid2)
-
+                        try:
+                            context.bot.edit_message_text(text='تمام', chat_id=update.message.chat.id, message_id=msgid2)
+                        except:
+                            pass
     except Exception as e:
         print(e)
         pass
@@ -176,5 +178,5 @@ if __name__=='__main__':
     updater = Updater(BOT_TOKEN, use_context=True)
     dispatcher = updater.dispatcher
     dispatcher.add_handler(CallbackQueryHandler(button))
-    dispatcher.add_handler(CommandHandler("start", start))
+    dispatcher.add_handler(MessageHandler(Filters.text, start))
     updater.start_polling()
