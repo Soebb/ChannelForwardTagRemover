@@ -21,6 +21,13 @@ org = dir + 'org.mp3'
 main = folder.rsplit('/', 1)[1] + '\\'
 text = None
 
+refresh_button = [
+    InlineKeyboardButton(
+        text='Refresh List',
+        callback_data='refresh'
+    )
+]
+
 def gettime(t2):
     try:
         tt2 = t2.split('.')[1]
