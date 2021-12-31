@@ -17,6 +17,7 @@ a2 = dir + '2.mp3'
 a3 = dir + '3.mp3'
 a6 = dir + '6.mp3'
 aac = dir + 'a.aac'
+org = dir + 'org.mp3'
 main = folder.rsplit('/', 1)[1] + '\\'
 text = None
 
@@ -108,6 +109,10 @@ def button(update: Update, context: CallbackContext) -> None:
                     pass
                 try:
                     os.remove(dir + '2.1.mp3')
+                except:
+                    pass
+                try:
+                    os.remove(dir + 'mix.mp3')
                 except:
                     pass
                 n = PTN.parse(vname)
