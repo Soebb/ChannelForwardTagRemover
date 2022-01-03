@@ -1,4 +1,3 @@
-<div class="container">
-  <video controls crossorigin playsinline
-<source src="https://dl.iranidata.com/sport/othersports/Swimming-Learning_IraniData.com.mp4" type="video/mp4"
+<video controls crossorigin playsinline
+  <source src="https://dl.iranidata.com/sport/othersports/Swimming-Learning_IraniData.com.mp4" type="video/mp4"
 			
