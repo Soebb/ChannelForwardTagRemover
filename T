@@ -1,0 +1,5 @@
+<div class="container">
+  <video controls crossorigin playsinline
+poster="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.jpg">
+    <source src="https://dl.iranidata.com/sport/othersports/Swimming-Learning_IraniData.com.mp4" type="video/mp4"
+
